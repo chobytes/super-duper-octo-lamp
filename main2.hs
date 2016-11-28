@@ -79,6 +79,21 @@ data instance Expression (IBoolean) where
   XOr :: Boolean -> Boolean -> Boolean
   NAnd :: Boolean -> Boolean -> Boolean
 
+instance Eval Boolean where
+  eval (Or T T) = T
+  eval (Or T _) = T
+  eval (Or _ T) = T
+  eval (Or _ _) = F
+  eval (And T T) = T
+  eval (And _ _) = F
+  eval (Not T) = F
+  eval (Not F) = T
+  eval (XOr T F) = T
+  eval (XOr F T) = T
+  eval (XOr _ _) = F
+  eval (NAnd F F) = T
+  eval (NAnd _ _) = F
+
 
 
 
