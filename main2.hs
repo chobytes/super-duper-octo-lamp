@@ -10,7 +10,6 @@
 , FlexibleInstances
 , TypeFamilies #-}
 
-
 import Foundation
 
 
@@ -66,8 +65,10 @@ instance Eval Nat where
 
 
 
+-- Boolean
+
 data IBoolean :: *
-deriving instance (Show (IBoolean)) => Show (Expression (IBoolean))
+deriving instance Show IBoolean
 type Boolean = Expression (IBoolean)
 
 data instance Expression (IBoolean) where
@@ -78,6 +79,7 @@ data instance Expression (IBoolean) where
   Not :: Boolean -> Boolean
   XOr :: Boolean -> Boolean -> Boolean
   NAnd :: Boolean -> Boolean -> Boolean
+deriving instance Show IBoolean => Show (Expression IBoolean)
 
 instance Eval Boolean where
   eval (Or T T) = T
@@ -96,6 +98,7 @@ instance Eval Boolean where
 
 
 
+-- Helpers
 
 natExp :: (Nat -> Nat -> Nat) -> Int -> Int -> Int
 natExp f a b = fromNat . eval $ f (fromInt a) (fromInt b)
